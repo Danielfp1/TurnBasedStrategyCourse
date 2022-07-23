@@ -4,9 +4,24 @@ using UnityEngine;
 
 public class MouseWorld : MonoBehaviour
 {
+    private static MouseWorld instance;
+
+    [SerializeField] private LayerMask mousePlaneLayerMask;
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
     void Update()
     {
+        transform.position = MouseWorld.GetPosition();
+    }
+
+    public static Vector3 GetPosition()
+    {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.Log(Physics.Raycast(ray)); // bool fuction that checks if the ray hit a collider (Under mouse position)
+        Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, instance.mousePlaneLayerMask); // bool fuction that checks if the ray hit a collider (Under mouse position)
+        return raycastHit.point;
     }
 }
