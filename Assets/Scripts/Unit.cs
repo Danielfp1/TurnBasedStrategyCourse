@@ -17,6 +17,10 @@ public class Unit : MonoBehaviour
             float moveSpeed = 4f;
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
+            //transform.forward = moveDirection; //Face move direction
+            float rotateSpeed = 10f;
+            transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed); //Face move direction smoothly
+
             unitAnimator.SetBool("IsWalking", true); //Move Unit
         }
         else
